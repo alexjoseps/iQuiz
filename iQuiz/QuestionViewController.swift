@@ -9,10 +9,17 @@ import UIKit
 
 class QuestionViewController: UIViewController {
 
+    @IBOutlet weak var tituloQuestao: UILabel!
+
+    @IBAction func botaoRespostaPressionado(_ sender: UIButton) {
+        print(sender.tag)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        navigationItem.hidesBackButton = true
     }
     
 
