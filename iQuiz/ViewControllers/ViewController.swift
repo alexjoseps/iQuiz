@@ -18,11 +18,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        navigationItem.hidesBackButton = true
+
         setBackgroundColor()
     }
 
     func setBackgroundColor() {
-        startButton.backgroundColor = UIColor(red: 116/255, green: 50/255, blue: 255/255, alpha: 1.0)
+        startButton.backgroundColor = UIColor.corDeFundoRoxoClaraIQuiz
     }
 
 }

@@ -13,19 +13,31 @@ class QuestionViewController: UIViewController {
 
     @IBOutlet weak var tituloQuestao: UILabel!
     @IBOutlet var respostasQuestao: [UIButton]!
-    
+
     @IBAction func botaoRespostaPressionado(_ sender: UIButton) {
         if acertouResposta(sender.tag) {
             pontuacao += 1
-            sender.backgroundColor = UIColor(red: 11/255, green: 161/255, blue: 53/255, alpha: 1.0)
+            sender.backgroundColor = UIColor.corDeFundoVerdeIQuiz
         } else {
-            sender.backgroundColor = UIColor(red: 211/255, green: 17/255, blue: 17/255, alpha: 1.0)
+            sender.backgroundColor = UIColor.corDeFundoVermelhaIQuiz
         }
-        
+
         if questaoAtual < listaDeQuestoes.count - 1 {
             questaoAtual += 1
-            Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(configuraQuestao), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(
+                timeInterval: 0.6,
+                target: self,
+                selector: #selector(configuraQuestao),
+                userInfo: nil,
+                repeats: false
+            )
+        } else {
+            navegaParaTelaDesempenho()
         }
+    }
+
+    func navegaParaTelaDesempenho() {
+        performSegue(withIdentifier: "irParaTelaDesempenho", sender: nil)
     }
 
     override func viewDidLoad() {
@@ -36,33 +48,42 @@ class QuestionViewController: UIViewController {
         configuraQuestao()
         configuraRespostas()
     }
-    
+
     func configuraTela() {
         navigationItem.hidesBackButton = true
     }
-    
+
     @objc func configuraQuestao() {
         tituloQuestao.numberOfLines = 0
         tituloQuestao.textAlignment = .center
         tituloQuestao.text = listaDeQuestoes[questaoAtual].titulo
-        
+
         configuraRespostas()
     }
-    
+
     func configuraRespostas() {
         for resposta in respostasQuestao {
-            resposta.setTitle(listaDeQuestoes[questaoAtual].respostas[resposta.tag], for: .normal)
-            resposta.backgroundColor = UIColor(red: 116/255, green: 50/255, blue: 255/255, alpha: 1.0)
+            resposta.setTitle(
+                listaDeQuestoes[questaoAtual].respostas[resposta.tag],
+                for: .normal
+            )
+            resposta.backgroundColor = UIColor.corDeFundoRoxoClaraIQuiz
         }
     }
-    
+
     func acertouResposta(_ opcaoEscolhida: Int) -> Bool {
         return listaDeQuestoes[questaoAtual].respostaCorreta == opcaoEscolhida
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let desempenhoVC = segue.destination as? DesempenhoViewController
+        else { return }
+        desempenhoVC.pontuacao = self.pontuacao
+    }
+
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
