@@ -50,6 +50,8 @@ class QuestionViewController: UIViewController {
             sender.backgroundColor = UIColor.corDeFundoVerdeIQuiz
         } else {
             sender.backgroundColor = UIColor.corDeFundoVermelhaIQuiz
+            let opcaoCorreta = listaDeQuestoes[questaoAtual].respostaCorreta
+            respostasQuestao[opcaoCorreta].backgroundColor = UIColor.corDeFundoVerdeIQuiz
         }
 
         if questaoAtual < listaDeQuestoes.count - 1 {
