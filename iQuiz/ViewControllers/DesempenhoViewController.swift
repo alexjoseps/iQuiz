@@ -18,8 +18,12 @@ class DesempenhoViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        navigationItem.hidesBackButton = true
+        configuraLayout()
         configurarDesempenho()
+    }
+    
+    func configuraLayout() {
+        navigationItem.hidesBackButton = true
     }
     
     func configurarDesempenho() {

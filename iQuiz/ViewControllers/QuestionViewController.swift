@@ -14,39 +14,12 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var tituloQuestao: UILabel!
     @IBOutlet var respostasQuestao: [UIButton]!
 
-    @IBAction func botaoRespostaPressionado(_ sender: UIButton) {
-        if acertouResposta(sender.tag) {
-            pontuacao += 1
-            sender.backgroundColor = UIColor.corDeFundoVerdeIQuiz
-        } else {
-            sender.backgroundColor = UIColor.corDeFundoVermelhaIQuiz
-        }
-
-        if questaoAtual < listaDeQuestoes.count - 1 {
-            questaoAtual += 1
-            Timer.scheduledTimer(
-                timeInterval: 0.6,
-                target: self,
-                selector: #selector(configuraQuestao),
-                userInfo: nil,
-                repeats: false
-            )
-        } else {
-            navegaParaTelaDesempenho()
-        }
-    }
-
-    func navegaParaTelaDesempenho() {
-        performSegue(withIdentifier: "irParaTelaDesempenho", sender: nil)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         configuraTela()
         configuraQuestao()
-        configuraRespostas()
     }
 
     func configuraTela() {
@@ -70,9 +43,35 @@ class QuestionViewController: UIViewController {
             resposta.backgroundColor = UIColor.corDeFundoRoxoClaraIQuiz
         }
     }
+    
+    @IBAction func botaoRespostaPressionado(_ sender: UIButton) {
+        if acertouResposta(sender.tag) {
+            pontuacao += 1
+            sender.backgroundColor = UIColor.corDeFundoVerdeIQuiz
+        } else {
+            sender.backgroundColor = UIColor.corDeFundoVermelhaIQuiz
+        }
 
+        if questaoAtual < listaDeQuestoes.count - 1 {
+            questaoAtual += 1
+            Timer.scheduledTimer(
+                timeInterval: 0.6,
+                target: self,
+                selector: #selector(configuraQuestao),
+                userInfo: nil,
+                repeats: false
+            )
+        } else {
+            navegaParaTelaDesempenho()
+        }
+    }
+    
     func acertouResposta(_ opcaoEscolhida: Int) -> Bool {
         return listaDeQuestoes[questaoAtual].respostaCorreta == opcaoEscolhida
+    }
+
+    func navegaParaTelaDesempenho() {
+        performSegue(withIdentifier: "irParaTelaDesempenho", sender: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
